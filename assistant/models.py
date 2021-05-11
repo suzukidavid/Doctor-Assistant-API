@@ -21,7 +21,7 @@ class Patient(models.Model):
     prof_surgeon_consultant = models.CharField(max_length=200, blank=True)
     assign_doctor = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
     date_of_admission = models.DateTimeField(auto_now_add=True)
-    date_of_discharge = models.DateTimeField(null=True)
+    date_of_discharge = models.DateTimeField(null=True, blank=True)
 
     def __str__(self):
         return self.name
@@ -38,16 +38,12 @@ class PatientInfos(models.Model):
     type = models.CharField(max_length=3, choices=CHOICES, default="L")
     type_name = models.CharField(max_length=100, blank=True)
     referred_by = models.CharField(max_length=50, blank=True)
-    specimen = models.CharField(max_length=150, blank=True)
-    investigation = models.CharField(max_length=250, blank=True)
-    created_date = models.DateTimeField(auto_now_add=True)
-    finishing_date = models.DateTimeField(null=True)
 
     class Meta:
         verbose_name_plural = "PatientInfos"
 
     def __str__(self):
-        return self.type_name
+        return self.type_name+"--"+self.type
 
 
 class Assign(models.Model):
@@ -57,21 +53,25 @@ class Assign(models.Model):
 
     patient_id = models.ForeignKey(Patient, on_delete=models.CASCADE)
     patient_info_id = models.ForeignKey(PatientInfos, on_delete=models.CASCADE)
+    specimen = models.CharField(max_length=150, blank=True)
+    investigation = models.CharField(max_length=250, blank=True)
+    created_date = models.DateTimeField(auto_now_add=True, null=True)
+    finishing_date = models.DateTimeField(null=True, blank=True)
 
     def __str__(self):
         return self.patient_info_id.type_name + " for " + self.patient_id.name
 
 
 class MediaImage(models.Model):
-    patient_info_id_from_assign = models.ForeignKey(Assign, on_delete=models.CASCADE)
+    assign_id = models.ForeignKey(Assign, on_delete=models.CASCADE)
     image = models.ImageField(upload_to='photos/%Y/%m/%d/')
 
 
 class MediaVideo(models.Model):
-    patient_info_id_from_assign = models.ForeignKey(Assign, on_delete=models.CASCADE)
+    assign_id = models.ForeignKey(Assign, on_delete=models.CASCADE)
     video = models.FileField(upload_to='video/%Y/%m/%d/')
 
 
 class MediaDocument(models.Model):
-    patient_info_id_from_assign = models.ForeignKey(Assign, on_delete=models.CASCADE)
+    assign_id = models.ForeignKey(Assign, on_delete=models.CASCADE)
     document = models.FileField(upload_to='document/%Y/%m/%d/')

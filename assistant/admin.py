@@ -61,21 +61,33 @@ class PatientInfosAdmin(admin.ModelAdmin):
     form = PatientAdminForm
     list_display = [
         'type',
-        'referred_by',
-        'specimen',
-        'investigation',
-        'created_date',
-        'finishing_date',
-    ]
-    readonly_fields = [
-        'created_date',
-
+        'type_name',
     ]
 
 
 admin.site.register(PatientInfos, PatientInfosAdmin)
 
-admin.site.register(Assign)
+
+class PatientAssignAdminForm(forms.ModelForm):
+    class Meta:
+        model = PatientInfos
+        fields = "__all__"
+
+
+class PatientAssignAdmin(admin.ModelAdmin):
+    form = PatientAdminForm
+    list_display = [
+        'patient_id',
+        'patient_info_id',
+        'specimen',
+        'investigation',
+        'created_date',
+        'finishing_date'
+    ]
+
+
+admin.site.register(Assign, PatientAssignAdmin)
+
 admin.site.register(MediaVideo)
 admin.site.register(MediaImage)
 admin.site.register(MediaDocument)
