@@ -50,3 +50,15 @@ class AssignViewSet(viewsets.ModelViewSet):
     queryset = models.Assign.objects.all()
     serializer_class = serializers.AssignSerializer
     permission_classes = [permissions.IsAuthenticated, IsDoctor]
+
+
+class PatientProfile(viewsets.ModelViewSet):
+    """ViewSet for the Patient Profile where
+        --> ALl Media and assign info will show
+    """
+    queryset = models.Assign.objects.all()
+    serializers = serializers.AssignSerializer
+    permission_classes = [permissions.IsAuthenticated, IsDoctor]
+
+    def get_queryset(self):
+        pass
