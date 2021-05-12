@@ -1,6 +1,8 @@
 from django.db import models
 
 from account.models import User
+
+
 # Create your models here.
 
 
@@ -43,7 +45,7 @@ class PatientInfos(models.Model):
         verbose_name_plural = "PatientInfos"
 
     def __str__(self):
-        return self.type_name+"--"+self.type
+        return self.type_name + "--" + self.type
 
 
 class Assign(models.Model):
@@ -66,12 +68,21 @@ class MediaImage(models.Model):
     assign_id = models.ForeignKey(Assign, on_delete=models.CASCADE)
     image = models.ImageField(upload_to='photos/%Y/%m/%d/')
 
+    def __str__(self):
+        return self.assign_id.patient_info_id.type_name + " Images for " + self.assign_id.patient_id.name
+
 
 class MediaVideo(models.Model):
     assign_id = models.ForeignKey(Assign, on_delete=models.CASCADE)
     video = models.FileField(upload_to='video/%Y/%m/%d/')
 
+    def __str__(self):
+        return self.assign_id.patient_info_id.type_name + " Video for " + self.assign_id.patient_id.name
+
 
 class MediaDocument(models.Model):
     assign_id = models.ForeignKey(Assign, on_delete=models.CASCADE)
     document = models.FileField(upload_to='document/%Y/%m/%d/')
+
+    def __str__(self):
+        return self.assign_id.patient_info_id.type_name + " Document for " + self.assign_id.patient_id.name
