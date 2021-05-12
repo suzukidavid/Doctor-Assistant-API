@@ -71,6 +71,10 @@ class PatientProfileSerializer(serializers.ModelSerializer):
     patient_id = serializers.PrimaryKeyRelatedField(
         queryset=models.Patient.objects.all(), source='patient', write_only=True)
 
+    categories_info = CategoriesInfoSerializer(read_only=True)
+    categories_info_id = serializers.PrimaryKeyRelatedField(
+        queryset=models.CategoriesInfo.objects.all(), source='categories_info', write_only=True)
+
     class Meta:
         model = models.Assign
         fields = '__all__'
