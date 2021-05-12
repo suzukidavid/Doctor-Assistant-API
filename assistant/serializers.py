@@ -11,6 +11,7 @@ class PatientSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.Patient
+        # fields = '__all__'
         fields = [
             "name",
             "diagnosis",
@@ -26,9 +27,9 @@ class PatientSerializer(serializers.ModelSerializer):
         ]
 
 
-class PatientInfosSerializer(serializers.ModelSerializer):
+class CategoriesInfoSerializer(serializers.ModelSerializer):
     class Meta:
-        model = models.PatientInfos
+        model = models.CategoriesInfo
         fields = '__all__'
 
 
@@ -55,11 +56,21 @@ class AssignSerializer(serializers.ModelSerializer):
     patients_id = serializers.PrimaryKeyRelatedField(
         queryset=models.Patient.objects.all(), source='patients', write_only=True)
 
-    patient_infos = PatientInfosSerializer(read_only=True)
+    patient_infos = CategoriesInfoSerializer(read_only=True)
     patient_infos_id = serializers.PrimaryKeyRelatedField(
-        queryset=models.PatientInfos.objects.all(), source='patient_infos', write_only=True)
+        queryset=models.CategoriesInfo.objects.all(), source='patient_infos', write_only=True)
 
     class Meta:
         model = models.Assign
         fields = '__all__'
         # fields = ['id', 'patients', 'patients_id', 'patient_infos', 'patient_infos_id']
+
+
+class PatientProfileSerializer(serializers.ModelSerializer):
+    patient = PatientSerializer(read_only=True)
+    patient_id = serializers.PrimaryKeyRelatedField(
+        queryset=models.Patient.objects.all(), source='patient', write_only=True)
+
+    class Meta:
+        model = models.Assign
+        fields = '__all__'

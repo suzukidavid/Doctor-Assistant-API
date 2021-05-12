@@ -2,7 +2,7 @@ from rest_framework import viewsets, permissions
 from account.permissions import IsDoctor
 from . import serializers
 from . import models
-
+from rest_framework.response import Response
 
 class PatientViewSet(viewsets.ModelViewSet):
     """ViewSet for the Patient class"""
@@ -12,11 +12,11 @@ class PatientViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticated, IsDoctor]
 
 
-class PatientInfosViewSet(viewsets.ModelViewSet):
-    """ViewSet for the PatientInfos class"""
+class CategoriesInfoViewSet(viewsets.ModelViewSet):
+    """ViewSet for the CategoriesInfo class"""
 
-    queryset = models.PatientInfos.objects.all()
-    serializer_class = serializers.PatientInfosSerializer
+    queryset = models.CategoriesInfo.objects.all()
+    serializer_class = serializers.CategoriesInfoSerializer
     permission_classes = [permissions.IsAuthenticated, IsDoctor]
 
 
@@ -53,12 +53,32 @@ class AssignViewSet(viewsets.ModelViewSet):
 
 
 class PatientProfile(viewsets.ModelViewSet):
-    """ViewSet for the Patient Profile where
+    """
+    ViewSet for the Patient Profile where
         --> ALl Media and assign info will show
     """
     queryset = models.Assign.objects.all()
-    serializers = serializers.AssignSerializer
+    serializer_class = serializers.PatientProfileSerializer
     permission_classes = [permissions.IsAuthenticated, IsDoctor]
 
-    def get_queryset(self):
-        pass
+    def get_queryset(self, *args, **kwargs):
+
+        if self.request.user.doctors:
+            queryset = self.queryset.filter(patient_id__assign_doctor=self.request.user.doctors)
+        else:
+            queryset = None
+
+        return queryset
+
+    # def list(self, request, *args, **kwargs):
+    #     total_amount = self.get_queryset(total_amount=True)
+    #     total_due = self.get_queryset(total_due=True)
+    #
+    #     patient_profile_data = {
+    #         'count': self.get_queryset().count(),\
+    #         'total_amount': total_amount,
+    #         'total_received': (total_amount - total_due),
+    #         'total_due': total_due
+    #
+    #     }
+    #     return Response(patient_profile_data)

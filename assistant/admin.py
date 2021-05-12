@@ -2,7 +2,7 @@ from django.contrib import admin
 
 from .models import (
     Patient,
-    PatientInfos,
+    CategoriesInfo,
     MediaVideo,
     MediaImage,
     MediaDocument,
@@ -51,13 +51,13 @@ class PatientAdmin(admin.ModelAdmin):
 admin.site.register(Patient, PatientAdmin)
 
 
-class PatientInfosAdminForm(forms.ModelForm):
+class CategoriesInfoAdminForm(forms.ModelForm):
     class Meta:
-        model = PatientInfos
+        model = CategoriesInfo
         fields = "__all__"
 
 
-class PatientInfosAdmin(admin.ModelAdmin):
+class CategoriesInfoAdmin(admin.ModelAdmin):
     form = PatientAdminForm
     list_display = [
         'type',
@@ -65,12 +65,12 @@ class PatientInfosAdmin(admin.ModelAdmin):
     ]
 
 
-admin.site.register(PatientInfos, PatientInfosAdmin)
+admin.site.register(CategoriesInfo, CategoriesInfoAdmin)
 
 
 class PatientAssignAdminForm(forms.ModelForm):
     class Meta:
-        model = PatientInfos
+        model = CategoriesInfo
         fields = "__all__"
 
 
@@ -78,7 +78,7 @@ class PatientAssignAdmin(admin.ModelAdmin):
     form = PatientAdminForm
     list_display = [
         'patient_id',
-        'patient_info_id',
+        'categories_info_id',
         'specimen',
         'investigation',
         'created_date',

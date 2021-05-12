@@ -3,7 +3,7 @@ from rest_framework.routers import DefaultRouter
 
 from .views import (
     PatientViewSet,
-    PatientInfosViewSet,
+    CategoriesInfoViewSet,
     MediaImageViewSet,
     MediaVideoViewSet,
     MediaDocumentViewSet,
@@ -14,7 +14,7 @@ from .views import (
 router = DefaultRouter()
 router.register('patients', PatientViewSet)  # for patient - post and get
 router.register('patient/profile', PatientProfile)  # for patients profile - Search,
-router.register('info', PatientInfosViewSet)  # for Categories - post and get Disease, Lab, Surgery
+router.register('info', CategoriesInfoViewSet)  # for Categories - post and get Disease, Lab, Surgery
 router.register('assign', AssignViewSet)  # for patient Assign the Categories - post and get
 router.register('image', MediaImageViewSet)  # for Categories Assign Image - post and get
 router.register('video', MediaVideoViewSet)  # for Categories Assign Video - post and get

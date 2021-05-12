@@ -29,7 +29,7 @@ class Patient(models.Model):
         return self.name
 
 
-class PatientInfos(models.Model):
+class CategoriesInfo(models.Model):
     # Info Types
     CHOICES = (
         ('L', 'Lab'),
@@ -42,7 +42,7 @@ class PatientInfos(models.Model):
     referred_by = models.CharField(max_length=50, blank=True)
 
     class Meta:
-        verbose_name_plural = "PatientInfos"
+        verbose_name_plural = "CategoriesInfo"
 
     def __str__(self):
         return self.type_name + "--" + self.type
@@ -53,36 +53,36 @@ class Assign(models.Model):
     Assign Lab or Surgery
     """
 
-    patient_id = models.ForeignKey(Patient, on_delete=models.CASCADE)
-    patient_info_id = models.ForeignKey(PatientInfos, on_delete=models.CASCADE)
+    patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
+    categories_info = models.ForeignKey(CategoriesInfo, on_delete=models.CASCADE)
     specimen = models.CharField(max_length=150, blank=True)
     investigation = models.CharField(max_length=250, blank=True)
     created_date = models.DateTimeField(auto_now_add=True, null=True)
     finishing_date = models.DateTimeField(null=True, blank=True)
 
     def __str__(self):
-        return self.patient_info_id.type_name + " for " + self.patient_id.name
+        return self.categories_info.type_name + " for " + self.patient.name
 
 
 class MediaImage(models.Model):
-    assign_id = models.ForeignKey(Assign, on_delete=models.CASCADE)
+    assign = models.ForeignKey(Assign, on_delete=models.CASCADE)
     image = models.ImageField(upload_to='photos/%Y/%m/%d/')
 
     def __str__(self):
-        return self.assign_id.patient_info_id.type_name + " Images for " + self.assign_id.patient_id.name
+        return self.assign.categories_info.type_name + " Images for " + self.assign.patient.name
 
 
 class MediaVideo(models.Model):
-    assign_id = models.ForeignKey(Assign, on_delete=models.CASCADE)
+    assign = models.ForeignKey(Assign, on_delete=models.CASCADE)
     video = models.FileField(upload_to='videos/%Y/%m/%d/')
 
     def __str__(self):
-        return self.assign_id.patient_info_id.type_name + " Video for " + self.assign_id.patient_id.name
+        return self.assign.categories_info.type_name + " Video for " + self.assign.patient.name
 
 
 class MediaDocument(models.Model):
-    assign_id = models.ForeignKey(Assign, on_delete=models.CASCADE)
+    assign = models.ForeignKey(Assign, on_delete=models.CASCADE)
     document = models.FileField(upload_to='documents/%Y/%m/%d/')
 
     def __str__(self):
-        return self.assign_id.patient_info_id.type_name + " Document for " + self.assign_id.patient_id.name
+        return self.assign.categories_info.type_name + " Document for " + self.assign.patient.name
