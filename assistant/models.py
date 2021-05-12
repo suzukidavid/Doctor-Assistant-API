@@ -74,7 +74,7 @@ class MediaImage(models.Model):
 
 class MediaVideo(models.Model):
     assign_id = models.ForeignKey(Assign, on_delete=models.CASCADE)
-    video = models.FileField(upload_to='video/%Y/%m/%d/')
+    video = models.FileField(upload_to='videos/%Y/%m/%d/')
 
     def __str__(self):
         return self.assign_id.patient_info_id.type_name + " Video for " + self.assign_id.patient_id.name
@@ -82,7 +82,7 @@ class MediaVideo(models.Model):
 
 class MediaDocument(models.Model):
     assign_id = models.ForeignKey(Assign, on_delete=models.CASCADE)
-    document = models.FileField(upload_to='document/%Y/%m/%d/')
+    document = models.FileField(upload_to='documents/%Y/%m/%d/')
 
     def __str__(self):
         return self.assign_id.patient_info_id.type_name + " Document for " + self.assign_id.patient_id.name
