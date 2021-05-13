@@ -81,11 +81,17 @@ class PatientProfile(viewsets.ModelViewSet):
         return queryset
 
     def list(self, request, *args, **kwargs):
-        media_image = self.get_queryset(media_image=True)
+        # media_image = self.get_queryset(media_image=True)
         patients_info = self.get_queryset()
+
         all_patient_profile_data = {}  # to add all patient info
+
         for info in patients_info:
             print(info.name)
+
+            # Modify Assign to get categories with media
+            assign_info = self.get_queryset(patient=info.id)
+
             patient_profile_data = {
                 'diagnosis': info.diagnosis,
                 'sex': info.sex,
@@ -95,7 +101,8 @@ class PatientProfile(viewsets.ModelViewSet):
                 'prof_surgeon_consultant': info.prof_surgeon_consultant,
                 'date_of_discharge': info.date_of_discharge,
                 'date_of_admission': info.date_of_admission,
-                'assign_info': serializers.PatientProfileSerializer(self.get_queryset(patient=info.id), many=True).data
+                'assign_info': serializers.PatientProfileSerializer(self.get_queryset(patient=info.id),
+                                                                    many=True).data
 
             }
             all_patient_profile_data[info.name] = patient_profile_data
