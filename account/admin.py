@@ -14,7 +14,7 @@ class UserPanel(BaseUserAdmin):
     fieldsets = ()
 
 
-# Register your models here.
+# Admin Models
 admin.site.register(User, UserPanel)
 admin.site.register(DoctorsProfile)
 admin.site.register(PhoneOtp)
