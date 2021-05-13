@@ -30,7 +30,7 @@ class PatientSerializer(serializers.ModelSerializer):
 class CategoriesInfoSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.CategoriesInfo
-        fields = '__all__'
+        fields = ['type', 'type_name']
 
 
 class MediaImageSerializer(serializers.ModelSerializer):
@@ -67,14 +67,18 @@ class AssignSerializer(serializers.ModelSerializer):
 
 
 class PatientProfileSerializer(serializers.ModelSerializer):
-    patient = PatientSerializer(read_only=True)
-    patient_id = serializers.PrimaryKeyRelatedField(
-        queryset=models.Patient.objects.all(), source='patient', write_only=True)
-
     categories_info = CategoriesInfoSerializer(read_only=True)
     categories_info_id = serializers.PrimaryKeyRelatedField(
         queryset=models.CategoriesInfo.objects.all(), source='categories_info', write_only=True)
 
     class Meta:
         model = models.Assign
-        fields = '__all__'
+        fields = [
+            'categories_info',
+            'categories_info_id',
+            'specimen',
+            'investigation',
+            'referred_by',
+            'created_date',
+            'finishing_date'
+        ]

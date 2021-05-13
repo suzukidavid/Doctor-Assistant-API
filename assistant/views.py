@@ -53,23 +53,27 @@ class AssignViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticated, IsDoctor]
 
 
-
 class PatientProfile(viewsets.ModelViewSet):
     """
     ViewSet for the Patient Profile where
         --> ALl Media and assign info will show
     """
-    queryset = models.Assign.objects.all()
+    queryset = models.Patient.objects.all()
+    assign_queryset = models.Assign.objects.all()
     serializer_class = serializers.PatientProfileSerializer
     permission_classes = [permissions.IsAuthenticated, IsDoctor]
 
-    def get_queryset(self, media_image=False, *args, **kwargs):
+    def get_queryset(self, media_image=False, patient=False, *args, **kwargs):
 
         if self.request.user.doctors:
-            queryset = self.queryset.filter(patient_id__assign_doctor=self.request.user.doctors)
+            queryset = self.queryset.filter(assign_doctor=self.request.user.doctors)
+
+            # To get all assign categories information for specific patient
+            if patient:
+                return self.assign_queryset.filter(patient_id=patient)
 
             if media_image:
-                #image_queryset = models.MediaImage.objects.filter(assign__patient__assign_doctor=)
+                # image_queryset = models.MediaImage.objects.filter(assign__patient__assign_doctor=)
                 pass
         else:
             queryset = None
@@ -78,11 +82,21 @@ class PatientProfile(viewsets.ModelViewSet):
 
     def list(self, request, *args, **kwargs):
         media_image = self.get_queryset(media_image=True)
-        total_due = self.get_queryset()
+        patients_info = self.get_queryset()
+        all_patient_profile_data = {}  # to add all patient info
+        for info in patients_info:
+            print(info.name)
+            patient_profile_data = {
+                'diagnosis': info.diagnosis,
+                'sex': info.sex,
+                'age': info.age,
+                'phone': info.phone,
+                'address': info.address,
+                'prof_surgeon_consultant': info.prof_surgeon_consultant,
+                'date_of_discharge': info.date_of_discharge,
+                'date_of_admission': info.date_of_admission,
+                'assign_info': serializers.PatientProfileSerializer(self.get_queryset(patient=info.id), many=True).data
 
-        patient_profile_data = {
-            'count': self.get_queryset().count(),
-            'full_info': serializers.PatientProfileSerializer(self.get_queryset(), many=True).data
-
-        }
-        return Response(patient_profile_data)
+            }
+            all_patient_profile_data[info.name] = patient_profile_data
+        return Response(all_patient_profile_data)
