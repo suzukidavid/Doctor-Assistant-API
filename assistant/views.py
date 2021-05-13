@@ -93,29 +93,35 @@ class PatientProfile(viewsets.ModelViewSet):
         all_patient_profile_data = {}  # to add all patient info
 
         for info in patients_info:
-            print(info.name)
 
             # Modify Assign to get categories with media
             assign_info = self.get_queryset(patient=info.id)
             all_assign_main = {}
 
             # Get Data from Assign Model
+            assign_count = 1
             for assign in assign_info:
 
                 media_images = {}
+                media_images_count = 1
                 media_image = self.get_queryset(media_image=assign.id)
                 for image in media_image:
-                    media_images[image.id] = str(image.image),
+                    media_images[media_images_count] = str(image.image),
+                    media_images_count += 1
 
                 media_videos = {}
+                media_videos_count = 1
                 media_video = self.get_queryset(media_video=assign.id)
                 for video in media_video:
-                    media_videos[video.id] = str(video.video),
+                    media_videos[media_videos_count] = str(video.video),
+                    media_videos_count += 1
 
                 media_documents = {}
+                media_documents_count = 1
                 media_document = self.get_queryset(media_document=assign.id)
                 for document in media_document:
-                    media_documents[document.id] = str(document.document),
+                    media_documents[media_documents_count] = str(document.document),
+                    media_documents_count += 1
 
                 categories_info = {
                                       'type': assign.categories_info.type,
@@ -133,7 +139,8 @@ class PatientProfile(viewsets.ModelViewSet):
                     'videos': media_videos,
                     'documents': media_documents,
                 }
-                all_assign_main[assign.id] = assign_main
+                all_assign_main[assign_count] = assign_main
+                assign_count += 1
 
             patient_profile_data = {
                 'diagnosis': info.diagnosis,
