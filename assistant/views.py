@@ -96,6 +96,28 @@ class PatientProfile(viewsets.ModelViewSet):
 
                 }
 
+                media_video = {
+
+                }
+
+                media_document = {
+
+                }
+
+                categories_info = {
+                    'type': assign.categories_info.type,
+                    'type_name': assign.categories_info.type_name
+                },
+
+                assign_main = {
+                    'categories_info': categories_info,
+                    'specimen': assign.specimen,
+                    'investigation': assign.investigation,
+                    'referred_by': assign.referred_by,
+                    'created_date': assign.created_date,
+                    'finishing_date': assign.finishing_date
+                }
+
             patient_profile_data = {
                 'diagnosis': info.diagnosis,
                 'sex': info.sex,
