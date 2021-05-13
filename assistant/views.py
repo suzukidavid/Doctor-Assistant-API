@@ -91,6 +91,10 @@ class PatientProfile(viewsets.ModelViewSet):
 
             # Modify Assign to get categories with media
             assign_info = self.get_queryset(patient=info.id)
+            for assign in assign_info:
+                media_images = {
+
+                }
 
             patient_profile_data = {
                 'diagnosis': info.diagnosis,
