@@ -63,7 +63,7 @@ class PatientProfile(viewsets.ModelViewSet):
     serializer_class = serializers.PatientProfileSerializer
     permission_classes = [permissions.IsAuthenticated, IsDoctor]
 
-    def get_queryset(self, media_image=False, patient=False, *args, **kwargs):
+    def get_queryset(self, media_image=False, media_document=False, media_video=False, patient=False, *args, **kwargs):
 
         if self.request.user.doctors:
             queryset = self.queryset.filter(assign_doctor=self.request.user.doctors)
@@ -73,8 +73,14 @@ class PatientProfile(viewsets.ModelViewSet):
                 return self.assign_queryset.filter(patient_id=patient)
 
             if media_image:
-                # image_queryset = models.MediaImage.objects.filter(assign__patient__assign_doctor=)
-                pass
+                return models.MediaImage.objects.filter(assign=media_image)
+
+            if media_video:
+                return models.MediaVideo.objects.filter(assign=media_video)
+
+            if media_document:
+                return models.MediaDocument.objects.filter(assign=media_document)
+
         else:
             queryset = None
 
@@ -91,23 +97,30 @@ class PatientProfile(viewsets.ModelViewSet):
 
             # Modify Assign to get categories with media
             assign_info = self.get_queryset(patient=info.id)
+            all_assign_main = {}
+
+            # Get Data from Assign Model
             for assign in assign_info:
-                media_images = {
 
-                }
+                media_images = {}
+                media_image = self.get_queryset(media_image=assign.id)
+                for image in media_image:
+                    media_images[image.id] = str(image.image),
 
-                media_video = {
+                media_videos = {}
+                media_video = self.get_queryset(media_video=assign.id)
+                for video in media_video:
+                    media_videos[video.id] = str(video.video),
 
-                }
-
-                media_document = {
-
-                }
+                media_documents = {}
+                media_document = self.get_queryset(media_document=assign.id)
+                for document in media_document:
+                    media_documents[document.id] = str(document.document),
 
                 categories_info = {
-                    'type': assign.categories_info.type,
-                    'type_name': assign.categories_info.type_name
-                },
+                                      'type': assign.categories_info.type,
+                                      'type_name': assign.categories_info.type_name
+                                  },
 
                 assign_main = {
                     'categories_info': categories_info,
@@ -115,8 +128,12 @@ class PatientProfile(viewsets.ModelViewSet):
                     'investigation': assign.investigation,
                     'referred_by': assign.referred_by,
                     'created_date': assign.created_date,
-                    'finishing_date': assign.finishing_date
+                    'finishing_date': assign.finishing_date,
+                    'images': media_images,
+                    'videos': media_videos,
+                    'documents': media_documents,
                 }
+                all_assign_main[assign.id] = assign_main
 
             patient_profile_data = {
                 'diagnosis': info.diagnosis,
@@ -127,8 +144,8 @@ class PatientProfile(viewsets.ModelViewSet):
                 'prof_surgeon_consultant': info.prof_surgeon_consultant,
                 'date_of_discharge': info.date_of_discharge,
                 'date_of_admission': info.date_of_admission,
-                'assign_info': serializers.PatientProfileSerializer(self.get_queryset(patient=info.id),
-                                                                    many=True).data
+
+                'assign_info': all_assign_main
 
             }
             all_patient_profile_data[info.name] = patient_profile_data
