@@ -4,6 +4,7 @@ from . import serializers
 from . import models
 from rest_framework.response import Response
 
+
 class PatientViewSet(viewsets.ModelViewSet):
     """ViewSet for the Patient class"""
 
@@ -52,6 +53,7 @@ class AssignViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticated, IsDoctor]
 
 
+
 class PatientProfile(viewsets.ModelViewSet):
     """
     ViewSet for the Patient Profile where
@@ -61,24 +63,26 @@ class PatientProfile(viewsets.ModelViewSet):
     serializer_class = serializers.PatientProfileSerializer
     permission_classes = [permissions.IsAuthenticated, IsDoctor]
 
-    def get_queryset(self, *args, **kwargs):
+    def get_queryset(self, media_image=False, *args, **kwargs):
 
         if self.request.user.doctors:
             queryset = self.queryset.filter(patient_id__assign_doctor=self.request.user.doctors)
+
+            if media_image:
+                #image_queryset = models.MediaImage.objects.filter(assign__patient__assign_doctor=)
+                pass
         else:
             queryset = None
 
         return queryset
 
-    # def list(self, request, *args, **kwargs):
-    #     total_amount = self.get_queryset(total_amount=True)
-    #     total_due = self.get_queryset(total_due=True)
-    #
-    #     patient_profile_data = {
-    #         'count': self.get_queryset().count(),\
-    #         'total_amount': total_amount,
-    #         'total_received': (total_amount - total_due),
-    #         'total_due': total_due
-    #
-    #     }
-    #     return Response(patient_profile_data)
+    def list(self, request, *args, **kwargs):
+        media_image = self.get_queryset(media_image=True)
+        total_due = self.get_queryset()
+
+        patient_profile_data = {
+            'count': self.get_queryset().count(),
+            'full_info': serializers.PatientProfileSerializer(self.get_queryset(), many=True).data
+
+        }
+        return Response(patient_profile_data)

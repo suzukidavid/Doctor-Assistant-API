@@ -39,7 +39,6 @@ class CategoriesInfo(models.Model):
 
     type = models.CharField(max_length=3, choices=CHOICES, default="L")
     type_name = models.CharField(max_length=100, blank=True)
-    referred_by = models.CharField(max_length=50, blank=True)
 
     class Meta:
         verbose_name_plural = "CategoriesInfo"
@@ -57,6 +56,7 @@ class Assign(models.Model):
     categories_info = models.ForeignKey(CategoriesInfo, on_delete=models.CASCADE)
     specimen = models.CharField(max_length=150, blank=True)
     investigation = models.CharField(max_length=250, blank=True)
+    referred_by = models.CharField(max_length=50, blank=True, null=True)
     created_date = models.DateTimeField(auto_now_add=True, null=True)
     finishing_date = models.DateTimeField(null=True, blank=True)
 

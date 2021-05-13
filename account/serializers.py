@@ -9,7 +9,7 @@ from .models import User, DoctorsProfile, PhoneOtp, UserAddress
 class UserSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = User
-        fields = ['id', 'email', 'phone', 'is_active', 'is_verified']
+        fields = ['id', 'username', 'email', 'phone', 'is_active', 'is_verified']
         extra_kwargs = {
         }
 
