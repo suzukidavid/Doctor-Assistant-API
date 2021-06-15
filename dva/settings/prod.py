@@ -1,7 +1,7 @@
 from .base import *
 
-STATIC_ROOT = '/home/dva_api/public_html/static'
-MEDIA_ROOT = '/home/dva_api/public_html/media'
+STATIC_ROOT = '/home/dvaapi/dva/static'
+MEDIA_ROOT = '/home/dvaapi/dva/media'
 
 DEBUG = env('DEBUG')
 ALLOWED_HOSTS = env('ALLOWED_HOSTS')
