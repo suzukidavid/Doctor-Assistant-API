@@ -9,6 +9,7 @@ ALLOWED_HOSTS = env('ALLOWED_HOSTS')
 DATABASES = {
     'default': {
         'ENGINE': env('DB_ENGINE'),
+        'OPTIONS': env('DB_OPTIONS'),
         'NAME': env('DB_NAME'),
         'USER': env('DB_USERNAME'),
         'PASSWORD': env('PASSWORD'),
