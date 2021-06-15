@@ -1,21 +1,19 @@
 from .base import *
-DEBUG = False
 
+STATIC_ROOT = '/home/dva_api/public_html/static'
+MEDIA_ROOT = '/home/dva_api/public_html/media'
 
-STATIC_ROOT = os.path.join(BASE_DIR, "static")
-MEDIA_ROOT = os.path.join(BASE_DIR, "media")
-
-ALLOWED_HOSTS = ['']
-
+DEBUG = env('DEBUG')
+ALLOWED_HOSTS = env('ALLOWED_HOSTS')
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': '',
-        'USER': '',
-        'PASSWORD': '',
-        'HOST': '',   # Or an IP Address that your DB is hosted on
-        'PORT': '3306',
+        'ENGINE': env('DB_ENGINE'),
+        'NAME': env('DB_NAME'),
+        'USER': env('DB_USERNAME'),
+        'PASSWORD': env('PASSWORD'),
+        'HOST': env('DB_HOST'),
+        'PORT': env('DB_PORT'),
     }
 }
 
