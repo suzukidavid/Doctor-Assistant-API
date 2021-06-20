@@ -10,7 +10,7 @@ class PatientViewSet(viewsets.ModelViewSet):
 
     queryset = models.Patient.objects.all()
     serializer_class = serializers.PatientSerializer
-    permission_classes = [permissions.IsAuthenticated, IsDoctor]
+    # permission_classes = [permissions.IsAuthenticated, IsDoctor]
 
 
 class CategoriesInfoViewSet(viewsets.ModelViewSet):
@@ -18,7 +18,7 @@ class CategoriesInfoViewSet(viewsets.ModelViewSet):
 
     queryset = models.CategoriesInfo.objects.all()
     serializer_class = serializers.CategoriesInfoSerializer
-    permission_classes = [permissions.IsAuthenticated, IsDoctor]
+    # permission_classes = [permissions.IsAuthenticated, IsDoctor]
 
 
 class MediaImageViewSet(viewsets.ModelViewSet):
@@ -45,7 +45,9 @@ class MediaVideoViewSet(viewsets.ModelViewSet):
 
     queryset = models.MediaVideo.objects.all()
     serializer_class = serializers.MediaVideoSerializer
-    permission_classes = [permissions.IsAuthenticated, IsDoctor]
+
+
+# permission_classes = [permissions.IsAuthenticated, IsDoctor]
 
 
 class MediaDocumentViewSet(viewsets.ModelViewSet):
@@ -53,7 +55,7 @@ class MediaDocumentViewSet(viewsets.ModelViewSet):
 
     queryset = models.MediaDocument.objects.all()
     serializer_class = serializers.MediaDocumentSerializer
-    permission_classes = [permissions.IsAuthenticated, IsDoctor]
+    # permission_classes = [permissions.IsAuthenticated, IsDoctor]
 
 
 class AssignViewSet(viewsets.ModelViewSet):
@@ -61,7 +63,7 @@ class AssignViewSet(viewsets.ModelViewSet):
 
     queryset = models.Assign.objects.all()
     serializer_class = serializers.AssignSerializer
-    permission_classes = [permissions.IsAuthenticated, IsDoctor]
+    # permission_classes = [permissions.IsAuthenticated, IsDoctor]
 
 #
 # class PatientProfile(viewsets.ModelViewSet):

@@ -43,6 +43,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework_swagger',
 
+    'corsheaders', # FOR Cross Orgian
+
 
     # Personal App
 
@@ -60,8 +62,13 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-]
+    'corsheaders.middleware.CorsMiddleware',
 
+]
+CORS_ORIGIN_ALLOW_ALL = True
+# CORS_ORIGIN_WHITELIST = (
+#   'http://localhost:8000',
+# )
 ROOT_URLCONF = 'dva.urls'
 
 TEMPLATES = [
@@ -115,14 +122,15 @@ USE_TZ = True
 
 AUTH_USER_MODEL = 'account.User'
 
+# static and media
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, "../dva/static/", "static_root")
+STATIC_ROOT = os.path.join(BASE_DIR, "static_cdn", "static_root")
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static_local"),
 )
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, "../dva/media/", "media_root")
+MEDIA_ROOT = os.path.join(BASE_DIR, "static_cdn", "media_root")
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
