@@ -14,6 +14,7 @@ class PatientSerializer(serializers.ModelSerializer):
         # fields = '__all__'
         fields = [
             "id",
+            "profile_image",
             "name",
             "diagnosis",
             "sex",
