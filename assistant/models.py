@@ -18,6 +18,7 @@ class Patient(models.Model):
     age = models.PositiveSmallIntegerField(blank=True, null=True)
     sex = models.CharField(max_length=25, choices=CHOICES, default="Male")
     phone = models.CharField(max_length=25, blank=True, null=True)
+    profile_image = models.ImageField(upload_to='photos/patient/', default='photos/patient/avatar.png')
     address = models.CharField(max_length=200, blank=True)
     diagnosis = models.CharField(max_length=200, blank=True)
     professor_surgeon_consultant = models.CharField(max_length=200, blank=True)

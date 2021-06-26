@@ -19,5 +19,12 @@ class PatientFilter(FilterSet):
 
     class Meta:
         model = Patient
-        fields = '__all__'
-        # fields = ('age_min', 'age_max', 'star_date', 'end_date')
+        fields = (
+            'age_min',
+            'age_max',
+            'star_date',
+            'end_date',
+            'name',
+            'phone',
+            'diagnosis'
+        )
