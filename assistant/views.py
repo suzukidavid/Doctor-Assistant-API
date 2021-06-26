@@ -1,8 +1,12 @@
 from rest_framework import viewsets, permissions
+from rest_framework.response import Response
+from rest_framework.filters import SearchFilter, OrderingFilter
+from django_filters.rest_framework import DjangoFilterBackend
+
 from account.permissions import IsDoctor
 from . import serializers
 from . import models
-from rest_framework.response import Response
+from .filters import PatientFilter
 
 
 class PatientViewSet(viewsets.ModelViewSet):
@@ -10,15 +14,10 @@ class PatientViewSet(viewsets.ModelViewSet):
 
     queryset = models.Patient.objects.all()
     serializer_class = serializers.PatientSerializer
-    # permission_classes = [permissions.IsAuthenticated, IsDoctor]
-
-
-class CategoriesInfoViewSet(viewsets.ModelViewSet):
-    """ViewSet for the CategoriesInfo class"""
-
-    queryset = models.CategoriesInfo.objects.all()
-    serializer_class = serializers.CategoriesInfoSerializer
-    # permission_classes = [permissions.IsAuthenticated, IsDoctor]
+    permission_classes = [permissions.IsAuthenticated, IsDoctor]
+    filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
+    search_fields = ('name', 'phone', 'diagnosis', 'sex',)
+    filter_class = PatientFilter
 
 
 class MediaImageViewSet(viewsets.ModelViewSet):
@@ -27,7 +26,7 @@ class MediaImageViewSet(viewsets.ModelViewSet):
     queryset = models.MediaImage.objects.all()
     serializer_class = serializers.MediaImageSerializer
 
-    # permission_classes = [permissions.IsAuthenticated, IsDoctor]
+    permission_classes = [permissions.IsAuthenticated, IsDoctor]
 
     def get_queryset(self, *args, **kwargs):
         """
@@ -45,9 +44,7 @@ class MediaVideoViewSet(viewsets.ModelViewSet):
 
     queryset = models.MediaVideo.objects.all()
     serializer_class = serializers.MediaVideoSerializer
-
-
-# permission_classes = [permissions.IsAuthenticated, IsDoctor]
+    permission_classes = [permissions.IsAuthenticated, IsDoctor]
 
 
 class MediaDocumentViewSet(viewsets.ModelViewSet):
@@ -55,7 +52,7 @@ class MediaDocumentViewSet(viewsets.ModelViewSet):
 
     queryset = models.MediaDocument.objects.all()
     serializer_class = serializers.MediaDocumentSerializer
-    # permission_classes = [permissions.IsAuthenticated, IsDoctor]
+    permission_classes = [permissions.IsAuthenticated, IsDoctor]
 
 
 class AssignViewSet(viewsets.ModelViewSet):
@@ -63,7 +60,7 @@ class AssignViewSet(viewsets.ModelViewSet):
 
     queryset = models.Assign.objects.all()
     serializer_class = serializers.AssignSerializer
-    # permission_classes = [permissions.IsAuthenticated, IsDoctor]
+    permission_classes = [permissions.IsAuthenticated, IsDoctor]
 
 #
 # class PatientProfile(viewsets.ModelViewSet):

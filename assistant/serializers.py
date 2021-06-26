@@ -20,18 +20,12 @@ class PatientSerializer(serializers.ModelSerializer):
             "age",
             "phone",
             "address",
-            "prof_surgeon_consultant",
+            "professor_surgeon_consultant",
             "assign_doctor",
             "assign_doctor_id",
             "date_of_discharge",
             "date_of_admission",
         ]
-
-
-class CategoriesInfoSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = models.CategoriesInfo
-        fields = ['id', 'type', 'type_name']
 
 
 class MediaImageSerializer(serializers.ModelSerializer):
@@ -56,10 +50,6 @@ class AssignSerializer(serializers.ModelSerializer):
     patients = PatientSerializer(read_only=True)
     patients_id = serializers.PrimaryKeyRelatedField(
         queryset=models.Patient.objects.all(), source='patients', write_only=True)
-
-    categories_info = CategoriesInfoSerializer(read_only=True)
-    categories_info_id = serializers.PrimaryKeyRelatedField(
-        queryset=models.CategoriesInfo.objects.all(), source='categories_info', write_only=True)
 
     class Meta:
         model = models.Assign

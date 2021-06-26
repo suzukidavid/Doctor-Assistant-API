@@ -2,7 +2,6 @@ from django.contrib import admin
 
 from .models import (
     Patient,
-    CategoriesInfo,
     MediaVideo,
     MediaImage,
     MediaDocument,
@@ -30,7 +29,7 @@ class PatientAdmin(admin.ModelAdmin):
         "date_of_admission",
         "date_of_discharge",
         "address",
-        "prof_surgeon_consultant",
+        "professor_surgeon_consultant",
     ]
     readonly_fields = [
         "date_of_admission",
@@ -51,38 +50,13 @@ class PatientAdmin(admin.ModelAdmin):
 admin.site.register(Patient, PatientAdmin)
 
 
-class CategoriesInfoAdminForm(forms.ModelForm):
-    class Meta:
-        model = CategoriesInfo
-        fields = "__all__"
-
-
-class CategoriesInfoAdmin(admin.ModelAdmin):
-    form = PatientAdminForm
-    list_display = [
-        'type',
-        'type_name',
-    ]
-
-
-admin.site.register(CategoriesInfo, CategoriesInfoAdmin)
-
-
-class PatientAssignAdminForm(forms.ModelForm):
-    class Meta:
-        model = CategoriesInfo
-        fields = "__all__"
-
-
 class PatientAssignAdmin(admin.ModelAdmin):
     form = PatientAdminForm
     list_display = [
-        'patient_id',
-        'categories_info_id',
-        'specimen',
-        'investigation',
-        'created_date',
-        'finishing_date'
+        'patient',
+        'categories',
+        'name',
+        'indication',
     ]
 
 
