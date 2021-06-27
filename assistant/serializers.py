@@ -14,6 +14,7 @@ class PatientSerializer(serializers.ModelSerializer):
         # fields = '__all__'
         fields = [
             "id",
+            "registration_number",
             "profile_image",
             "name",
             "diagnosis",
@@ -37,7 +38,6 @@ class InvestigationSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Investigation
         fields = '__all__'
-        # fields = ['id', 'patients', 'patients_id', 'categories_info', 'categories_info_id']
 
 
 class SurgerySerializer(serializers.ModelSerializer):
@@ -48,7 +48,6 @@ class SurgerySerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Surgery
         fields = '__all__'
-        # fields = ['id', 'patients', 'patients_id', 'categories_info', 'categories_info_id']
 
 
 class FollowUpSerializer(serializers.ModelSerializer):
@@ -59,7 +58,22 @@ class FollowUpSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.FollowUp
         fields = '__all__'
-        # fields = ['id', 'patients', 'patients_id', 'categories_info', 'categories_info_id']
+
+
+class DiagnosisSerializer(serializers.ModelSerializer):
+    patients = PatientSerializer(read_only=True)
+    patients_id = serializers.PrimaryKeyRelatedField(
+        queryset=models.Patient.objects.all(), source='patients', write_only=True)
+
+    class Meta:
+        model = models.Diagnosis
+        fields = '__all__'
+
+
+class DiseaseLibrarySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.DiseaseLibrary
+        fields = '__all__'
 
 
 """
