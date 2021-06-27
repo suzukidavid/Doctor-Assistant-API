@@ -20,47 +20,97 @@ class PatientViewSet(viewsets.ModelViewSet):
     filter_class = PatientFilter
 
 
-class MediaImageViewSet(viewsets.ModelViewSet):
-    """ViewSet for the MediaImage class"""
 
-    queryset = models.MediaImage.objects.all()
-    serializer_class = serializers.MediaImageSerializer
+class InvestigationViewSet(viewsets.ModelViewSet):
+    """ViewSet for the Investigation class"""
 
-    permission_classes = [permissions.IsAuthenticated, IsDoctor]
-
-    def get_queryset(self, *args, **kwargs):
-        """
-              Optionally restricts the returned purchases to a given user,
-              by filtering against a `username` query parameter in the URL.
-              """
-        assign = self.request.query_params.get('assign')
-        if assign is not None:
-            queryset = self.queryset.filter(assign__categories_info=assign)
-            return queryset
-
-
-class MediaVideoViewSet(viewsets.ModelViewSet):
-    """ViewSet for the MediaVideo class"""
-
-    queryset = models.MediaVideo.objects.all()
-    serializer_class = serializers.MediaVideoSerializer
+    queryset = models.Investigation.objects.all()
+    serializer_class = serializers.InvestigationSerializer
     permission_classes = [permissions.IsAuthenticated, IsDoctor]
 
 
-class MediaDocumentViewSet(viewsets.ModelViewSet):
-    """ViewSet for the MediaDocument class"""
+class SurgeryViewSet(viewsets.ModelViewSet):
+    """ViewSet for the Surgery class"""
 
-    queryset = models.MediaDocument.objects.all()
-    serializer_class = serializers.MediaDocumentSerializer
+    queryset = models.Surgery.objects.all()
+    serializer_class = serializers.SurgerySerializer
     permission_classes = [permissions.IsAuthenticated, IsDoctor]
 
 
-class AssignViewSet(viewsets.ModelViewSet):
-    """ViewSet for the Assign class"""
+class FollowUpViewSet(viewsets.ModelViewSet):
+    """ViewSet for the FollowUp class"""
 
-    queryset = models.Assign.objects.all()
-    serializer_class = serializers.AssignSerializer
+    queryset = models.FollowUp.objects.all()
+    serializer_class = serializers.FollowUpSerializer
     permission_classes = [permissions.IsAuthenticated, IsDoctor]
+
+
+class DiagnosisViewSet(viewsets.ModelViewSet):
+    """ViewSet for the Diagnosis class"""
+
+    queryset = models.Diagnosis.objects.all()
+    serializer_class = serializers.DiagnosisSerializer
+    permission_classes = [permissions.IsAuthenticated, IsDoctor]
+
+
+"""
+Media ViewSets 
+"""
+
+
+class InvestigationImageViewSet(viewsets.ModelViewSet):
+    """ViewSet for the InvestigationImage class"""
+
+    queryset = models.InvestigationImage.objects.all()
+    serializer_class = serializers.InvestigationImageSerializer
+
+    permission_classes = [permissions.IsAuthenticated, IsDoctor]
+
+
+class InvestigationVideoViewSet(viewsets.ModelViewSet):
+    """ViewSet for the Investigation Video class"""
+
+    queryset = models.InvestigationVideo.objects.all()
+    serializer_class = serializers.InvestigationVideoSerializer
+
+    permission_classes = [permissions.IsAuthenticated, IsDoctor]
+
+
+class InvestigationDocumentViewSet(viewsets.ModelViewSet):
+    """ViewSet for the Investigation Document class"""
+
+    queryset = models.InvestigationDocument.objects.all()
+    serializer_class = serializers.InvestigationDocumentSerializer
+
+    permission_classes = [permissions.IsAuthenticated, IsDoctor]
+
+
+class SurgeryImageViewSet(viewsets.ModelViewSet):
+    """ViewSet for the SurgeryImage class"""
+
+    queryset = models.InvestigationImage.objects.all()
+    serializer_class = serializers.SurgeryImageSerializer
+
+    permission_classes = [permissions.IsAuthenticated, IsDoctor]
+
+
+class SurgeryVideoViewSet(viewsets.ModelViewSet):
+    """ViewSet for the Surgery Video class"""
+
+    queryset = models.SurgeryVideo.objects.all()
+    serializer_class = serializers.SurgeryVideoSerializer
+
+    permission_classes = [permissions.IsAuthenticated, IsDoctor]
+
+
+class SurgeryDocumentViewSet(viewsets.ModelViewSet):
+    """ViewSet for the Surgery Document class"""
+
+    queryset = models.SurgeryDocument.objects.all()
+    serializer_class = serializers.SurgeryDocumentSerializer
+
+    permission_classes = [permissions.IsAuthenticated, IsDoctor]
+
 
 #
 # class PatientProfile(viewsets.ModelViewSet):

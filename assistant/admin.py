@@ -2,7 +2,13 @@ from django.contrib import admin
 
 from .models import (
     Patient,
-    FollowUp
+    History,
+    Investigation,
+    Diagnosis,
+    Surgery,
+    FollowUp,
+    DiseaseLibrary,
+
 )
 
 from django import forms
@@ -44,8 +50,8 @@ class PatientAdmin(admin.ModelAdmin):
 
 admin.site.register(Patient, PatientAdmin)
 
-
-admin.site.register(Assign, PatientAssignAdmin)
-
+admin.site.register(History)
+admin.site.register(Investigation)
+admin.site.register(Diagnosis)
+admin.site.register(Surgery)
 admin.site.register(FollowUp)
-
