@@ -29,33 +29,97 @@ class PatientSerializer(serializers.ModelSerializer):
         ]
 
 
-class MediaImageSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = models.MediaImage
-        fields = '__all__'
-
-
-class MediaVideoSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = models.MediaVideo
-        fields = '__all__'
-
-
-class MediaDocumentSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = models.MediaDocument
-        fields = '__all__'
-
-
-class AssignSerializer(serializers.ModelSerializer):
+class InvestigationSerializer(serializers.ModelSerializer):
     patients = PatientSerializer(read_only=True)
     patients_id = serializers.PrimaryKeyRelatedField(
         queryset=models.Patient.objects.all(), source='patients', write_only=True)
 
     class Meta:
-        model = models.Assign
+        model = models.Investigation
         fields = '__all__'
         # fields = ['id', 'patients', 'patients_id', 'categories_info', 'categories_info_id']
+
+
+class SurgerySerializer(serializers.ModelSerializer):
+    patients = PatientSerializer(read_only=True)
+    patients_id = serializers.PrimaryKeyRelatedField(
+        queryset=models.Patient.objects.all(), source='patients', write_only=True)
+
+    class Meta:
+        model = models.Surgery
+        fields = '__all__'
+        # fields = ['id', 'patients', 'patients_id', 'categories_info', 'categories_info_id']
+
+
+class FollowUpSerializer(serializers.ModelSerializer):
+    patients = PatientSerializer(read_only=True)
+    patients_id = serializers.PrimaryKeyRelatedField(
+        queryset=models.Patient.objects.all(), source='patients', write_only=True)
+
+    class Meta:
+        model = models.FollowUp
+        fields = '__all__'
+        # fields = ['id', 'patients', 'patients_id', 'categories_info', 'categories_info_id']
+
+
+"""
+Media Serializer 
+
+"""
+
+
+class InvestigationImageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.InvestigationImage
+        fields = '__all__'
+
+
+class InvestigationVideoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.InvestigationVideo
+        fields = '__all__'
+
+
+class InvestigationDocumentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.InvestigationDocument
+        fields = '__all__'
+
+
+class SurgeryImageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.SurgeryImage
+        fields = '__all__'
+
+
+class SurgeryVideoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.SurgeryVideo
+        fields = '__all__'
+
+
+class SurgeryDocumentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.SurgeryDocument
+        fields = '__all__'
+
+
+class FollowUpImageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.FollowUpImage
+        fields = '__all__'
+
+
+class FollowUpVideoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.FollowUpVideo
+        fields = '__all__'
+
+
+class FollowUpDocumentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.FollowUpDocument
+        fields = '__all__'
 
 # class PatientProfileSerializer(serializers.ModelSerializer):
 #     categories_info = CategoriesInfoSerializer(read_only=True)

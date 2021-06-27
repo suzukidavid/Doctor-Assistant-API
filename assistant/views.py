@@ -16,7 +16,7 @@ class PatientViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.PatientSerializer
     permission_classes = [permissions.IsAuthenticated, IsDoctor]
     filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
-    search_fields = ('name', 'phone', 'diagnosis', 'sex',)
+    search_fields = ('name', 'phone', 'sex',)
     filter_class = PatientFilter
 
 
