@@ -26,9 +26,14 @@ router.register('investigation', InvestigationViewSet)
 router.register('diagnosis', DiagnosisViewSet)
 router.register('surgery', SurgeryViewSet)
 router.register('followup', FollowUpViewSet)
-router.register('investigation/image', InvestigationImageViewSet)
-router.register('investigation/video', InvestigationVideoViewSet)
-router.register('investigation/document', InvestigationDocumentViewSet)
+
+router.register('surgery/image', SurgeryImageViewSet)
+router.register('surgery/video', SurgeryVideoViewSet)
+router.register('surgery/document', SurgeryDocumentViewSet)
+
+router.register('surgery/image', SurgeryImageViewSet)
+router.register('surgery/video', SurgeryVideoViewSet)
+router.register('surgery/document', SurgeryDocumentViewSet)
 
 urlpatterns = [
     path('api/', include(router.urls)),
