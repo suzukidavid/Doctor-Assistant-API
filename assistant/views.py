@@ -20,6 +20,14 @@ class PatientViewSet(viewsets.ModelViewSet):
     filter_class = PatientFilter
 
 
+class DiseaseLibraryViewSet(viewsets.ModelViewSet):
+    """
+    ViewSet For Disease Library
+    """
+    queryset = models.DiseaseLibrary.objects.all()
+    serializer_class = serializers.DiseaseLibrarySerializer
+    permission_classes = [permissions.IsAuthenticated]
+
 
 class InvestigationViewSet(viewsets.ModelViewSet):
     """ViewSet for the Investigation class"""
@@ -110,7 +118,6 @@ class SurgeryDocumentViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.SurgeryDocumentSerializer
 
     permission_classes = [permissions.IsAuthenticated, IsDoctor]
-
 
 #
 # class PatientProfile(viewsets.ModelViewSet):
