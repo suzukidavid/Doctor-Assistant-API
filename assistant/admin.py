@@ -8,6 +8,15 @@ from .models import (
     Surgery,
     FollowUp,
     DiseaseLibrary,
+    InvestigationImage,
+    InvestigationVideo,
+    InvestigationDocument,
+    SurgeryImage,
+    SurgeryVideo,
+    SurgeryDocument,
+    FollowUpImage,
+    FollowUpVideo,
+    FollowUpDocument,
 
 )
 
@@ -34,7 +43,6 @@ class PatientAdmin(admin.ModelAdmin):
         "professor_surgeon_consultant",
     ]
     readonly_fields = [
-        "date_of_admission",
 
     ]
     search_fields = [
@@ -50,8 +58,52 @@ class PatientAdmin(admin.ModelAdmin):
 
 admin.site.register(Patient, PatientAdmin)
 
+admin.site.register(DiseaseLibrary)
 admin.site.register(History)
-admin.site.register(Investigation)
+
+
+class InvestigationImageImageAdmin(admin.StackedInline):
+    model = InvestigationImage
+
+
+class InvestigationVideoAdmin(admin.StackedInline):
+    model = InvestigationVideo
+
+
+class InvestigationDocumentAdmin(admin.StackedInline):
+    model = InvestigationDocument
+
+
+@admin.register(Investigation)
+class InvestigationAdmin(admin.ModelAdmin):
+    inlines = [InvestigationImageImageAdmin, InvestigationVideoAdmin, InvestigationDocumentAdmin]
+
+    class Meta:
+        model = Investigation
+
+
 admin.site.register(Diagnosis)
-admin.site.register(Surgery)
+
+
+class SurgeryImageAdmin(admin.StackedInline):
+    model = SurgeryImage
+
+
+class SurgeryVideoAdmin(admin.StackedInline):
+    model = SurgeryVideo
+
+
+class SurgeryDocumentAdmin(admin.StackedInline):
+    model = SurgeryDocument
+
+
+@admin.register(Surgery)
+class SurgeryAdmin(admin.ModelAdmin):
+    inlines = [SurgeryImageAdmin, SurgeryVideoAdmin, SurgeryDocumentAdmin]
+
+    class Meta:
+        model = Surgery
+
+
+# admin.site.register(Surgery)
 admin.site.register(FollowUp)

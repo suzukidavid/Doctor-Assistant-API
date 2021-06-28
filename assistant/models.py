@@ -23,7 +23,7 @@ class Patient(models.Model):
     address = models.CharField(max_length=200, blank=True)
     professor_surgeon_consultant = models.CharField(max_length=200, blank=True)
     assign_doctor = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
-    date_of_admission = models.DateTimeField(auto_now=True, blank=True)
+    date_of_admission = models.DateTimeField(null=True, blank=True)
     date_of_discharge = models.DateTimeField(null=True, blank=True)
 
     # image field for pfp
@@ -40,13 +40,18 @@ class DiseaseLibrary(models.Model):
         return self.name
 
 
-class Diagnosis(models.CharField):
-    name = models.ManyToManyField(DiseaseLibrary, blank=True,
-                                  related_name='diagnosis')
+class Diagnosis(models.Model):
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
+    name = models.ManyToManyField(DiseaseLibrary, blank=True,
+                                  related_name='diagnosis_name')
+
+    details = models.TextField(blank=True, null=True)
+
+    class Meta:
+        verbose_name_plural = "Diagnosis"
 
     def __str__(self):
-        return self.name.name
+        return self.patient.name
 
 
 class Examination(models.Model):
@@ -71,8 +76,8 @@ class Investigation(models.Model):
     details = models.TextField(blank=True, null=True)
 
     referred_by = models.CharField(max_length=50, blank=True, null=True)
-    created_date = models.DateTimeField(auto_now_add=True, null=True)
-    finishing_date = models.DateTimeField(null=True, blank=True)
+    receive_date = models.DateTimeField(null=True, blank=True)
+    delivery_date = models.DateTimeField(null=True, blank=True)
 
     def __str__(self):
         return self.name
@@ -88,8 +93,8 @@ class Surgery(models.Model):
     details = models.TextField(blank=True, null=True)
 
     referred_by = models.CharField(max_length=50, blank=True, null=True)
-    created_date = models.DateTimeField(auto_now_add=True, null=True)
-    finishing_date = models.DateTimeField(null=True, blank=True)
+    receive_date = models.DateTimeField(null=True, blank=True)
+    delivery_date = models.DateTimeField(null=True, blank=True)
 
     def __str__(self):
         return self.name
@@ -121,7 +126,7 @@ class FamilyHistory(models.Model):
 
     """
     relation_name = models.CharField(max_length=50, blank=True, null=True)
-    illness = models.ManyToManyField(DiseaseLibrary, blank=True, null=True)
+    illness = models.ManyToManyField(DiseaseLibrary, blank=True)
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
 
     def __str__(self):
@@ -136,9 +141,9 @@ class History(models.Model):
     history_of_present_illness = models.ManyToManyField(DiseaseLibrary, blank=True,
                                                         related_name='history_of_present_illness')  # Auto Suggest Field
     past_surgical_history = models.TextField(blank=True, null=True)  # Auto Suggest Field
-    history_of_ct_rt_ccrt_other = models.ManyToManyField(DiseaseLibrary, blank=True, null=True,
+    history_of_ct_rt_ccrt_other = models.ManyToManyField(DiseaseLibrary, blank=True,
                                                          related_name='history_of_ct_rt_ccrt_other')  # Auto Suggest Field
-    co_morbidities = models.ManyToManyField(DiseaseLibrary, blank=True, null=True,
+    co_morbidities = models.ManyToManyField(DiseaseLibrary, blank=True,
                                             related_name='co_morbidities')  # Auto Suggest Field
     family_history = models.ManyToManyField(FamilyHistory, blank=True,
                                             related_name='family_history')
