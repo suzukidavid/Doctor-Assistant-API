@@ -44,8 +44,7 @@ INSTALLED_APPS = [
     'django_filters',
     'rest_framework_swagger',
 
-    'corsheaders', # FOR Cross Orgian
-
+    'corsheaders',  # FOR Cross Orgian
 
     # Personal App
 
@@ -75,7 +74,7 @@ ROOT_URLCONF = 'dva.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [PROJECT_DIR, 'templates'],
+        'DIRS': [os.path.join(PROJECT_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -113,7 +112,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Dhaka'
 
 USE_I18N = True
 

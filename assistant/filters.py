@@ -15,7 +15,7 @@ class PatientFilter(FilterSet):
 
     name = Filter(field_name='name', lookup_expr='icontains')
     phone = Filter(field_name='phone', lookup_expr='icontains')
-    diagnosis = Filter(field_name='diagnosis', lookup_expr='icontains')
+    # diagnosis = Filter(field_name='diagnosis', lookup_expr='icontains')
     sex = Filter(field_name='sex', lookup_expr='icontains')
 
     class Meta:
@@ -27,6 +27,6 @@ class PatientFilter(FilterSet):
             'end_date',
             'name',
             'phone',
-            'diagnosis',
+            # 'diagnosis',
             'sex',
         )

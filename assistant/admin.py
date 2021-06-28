@@ -2,10 +2,23 @@ from django.contrib import admin
 
 from .models import (
     Patient,
-    MediaVideo,
-    MediaImage,
-    MediaDocument,
-    Assign
+    History,
+    Investigation,
+    Diagnosis,
+    Surgery,
+    FollowUp,
+    DiseaseLibrary,
+    InvestigationImage,
+    InvestigationVideo,
+    InvestigationDocument,
+    SurgeryImage,
+    SurgeryVideo,
+    SurgeryDocument,
+    FollowUpImage,
+    FollowUpVideo,
+    FollowUpDocument,
+    FamilyHistory,
+
 )
 
 from django import forms
@@ -21,7 +34,6 @@ class PatientAdmin(admin.ModelAdmin):
     form = PatientAdminForm
     list_display = [
         "name",
-        "diagnosis",
         "sex",
         "phone",
         "age",
@@ -32,13 +44,11 @@ class PatientAdmin(admin.ModelAdmin):
         "professor_surgeon_consultant",
     ]
     readonly_fields = [
-        "date_of_admission",
 
     ]
     search_fields = [
         'name',
         'phone',
-        'diagnosis',
     ]
 
     def save_model(self, request, obj, form, change):
@@ -49,19 +59,71 @@ class PatientAdmin(admin.ModelAdmin):
 
 admin.site.register(Patient, PatientAdmin)
 
-
-class PatientAssignAdmin(admin.ModelAdmin):
-    form = PatientAdminForm
-    list_display = [
-        'patient',
-        'categories',
-        'name',
-        'indication',
-    ]
+admin.site.register(DiseaseLibrary)
+admin.site.register(History)
 
 
-admin.site.register(Assign, PatientAssignAdmin)
+class InvestigationImageImageAdmin(admin.StackedInline):
+    model = InvestigationImage
 
-admin.site.register(MediaVideo)
-admin.site.register(MediaImage)
-admin.site.register(MediaDocument)
+
+class InvestigationVideoAdmin(admin.StackedInline):
+    model = InvestigationVideo
+
+
+class InvestigationDocumentAdmin(admin.StackedInline):
+    model = InvestigationDocument
+
+
+@admin.register(Investigation)
+class InvestigationAdmin(admin.ModelAdmin):
+    inlines = [InvestigationImageImageAdmin, InvestigationVideoAdmin, InvestigationDocumentAdmin]
+
+    class Meta:
+        model = Investigation
+
+
+admin.site.register(Diagnosis)
+
+
+class SurgeryImageAdmin(admin.StackedInline):
+    model = SurgeryImage
+
+
+class SurgeryVideoAdmin(admin.StackedInline):
+    model = SurgeryVideo
+
+
+class SurgeryDocumentAdmin(admin.StackedInline):
+    model = SurgeryDocument
+
+
+@admin.register(Surgery)
+class SurgeryAdmin(admin.ModelAdmin):
+    inlines = [SurgeryImageAdmin, SurgeryVideoAdmin, SurgeryDocumentAdmin]
+
+    class Meta:
+        model = Surgery
+
+
+class FollowUpImageAdmin(admin.StackedInline):
+    model = FollowUpImage
+
+
+class FollowUpVideoAdmin(admin.StackedInline):
+    model = FollowUpVideo
+
+
+class FollowUpDocumentAdmin(admin.StackedInline):
+    model = FollowUpDocument
+
+
+@admin.register(FollowUp)
+class FollowUpAdmin(admin.ModelAdmin):
+    inlines = [FollowUpImageAdmin, FollowUpVideoAdmin, FollowUpDocumentAdmin]
+
+    class Meta:
+        model = FollowUp
+
+
+admin.site.register(FamilyHistory)
