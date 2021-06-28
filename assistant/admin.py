@@ -105,5 +105,22 @@ class SurgeryAdmin(admin.ModelAdmin):
         model = Surgery
 
 
-# admin.site.register(Surgery)
-admin.site.register(FollowUp)
+class FollowUpImageAdmin(admin.StackedInline):
+    model = FollowUpImage
+
+
+class FollowUpVideoAdmin(admin.StackedInline):
+    model = FollowUpVideo
+
+
+class FollowUpDocumentAdmin(admin.StackedInline):
+    model = FollowUpDocument
+
+
+@admin.register(FollowUp)
+class FollowUpAdmin(admin.ModelAdmin):
+    inlines = [FollowUpImageAdmin, FollowUpVideoAdmin, FollowUpDocumentAdmin]
+
+    class Meta:
+        model = FollowUp
+
