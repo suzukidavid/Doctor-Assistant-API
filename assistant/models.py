@@ -42,10 +42,12 @@ class DiseaseLibrary(models.Model):
 
 class Diagnosis(models.Model):
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
-    name = models.ManyToManyField(DiseaseLibrary, blank=True,
-                                  related_name='diagnosis_name')
-
-    details = models.TextField(blank=True, null=True)
+    diagnosis_name = models.ManyToManyField(DiseaseLibrary, blank=True,
+                                            related_name='diagnosis_name')
+    T = models.CharField(max_length=20, blank=True, null=True)
+    N = models.CharField(max_length=20, blank=True, null=True)
+    M = models.CharField(max_length=20, blank=True, null=True)
+    Stage = models.CharField(max_length=20, blank=True, null=True)
 
     class Meta:
         verbose_name_plural = "Diagnosis"
@@ -57,12 +59,15 @@ class Diagnosis(models.Model):
 class Examination(models.Model):
     """
     Patient Surgery Model
-    """
 
-    details = models.TextField(blank=True, null=True)
+    Auto Field
+    """
+    primary_site = models.TextField(blank=True, null=True)
+    nack_node = models.CharField(max_length=50, blank=True, null=True)
+    other_site = models.TextField(blank=True, null=True)
 
     def __str__(self):
-        return self.details
+        return self.primary_site
 
 
 class Investigation(models.Model):
@@ -75,7 +80,7 @@ class Investigation(models.Model):
     reports = models.TextField(blank=True, null=True)
     details = models.TextField(blank=True, null=True)
 
-    referred_by = models.CharField(max_length=50, blank=True, null=True)
+    referred_by = models.CharField(max_length=50, blank=True, null=True)  # No Need
     receive_date = models.DateTimeField(null=True, blank=True)
     delivery_date = models.DateTimeField(null=True, blank=True)
 
@@ -88,16 +93,16 @@ class Surgery(models.Model):
     Patient Surgery Model
     """
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
-    name = models.CharField(max_length=150, blank=True)
-    indication = models.CharField(max_length=250, blank=True, null=True)
-    details = models.TextField(blank=True, null=True)
 
-    referred_by = models.CharField(max_length=50, blank=True, null=True)
-    receive_date = models.DateTimeField(null=True, blank=True)
-    delivery_date = models.DateTimeField(null=True, blank=True)
+    date_of_surgery = models.DateTimeField(null=True, blank=True)
+    name_of_surgery = models.CharField(max_length=150, blank=True)
+    indication = models.CharField(max_length=250, blank=True, null=True)
+    findings = models.TextField(blank=True, null=True)
+
+    # referred_by = models.CharField(max_length=50, blank=True, null=True)
 
     def __str__(self):
-        return self.name
+        return self.name_of_surgery
 
 
 class HistoryOfCTRTCCTROther(models.Model):
@@ -113,8 +118,9 @@ class HistoryOfCTRTCCTROther(models.Model):
     )
 
     name = models.CharField(max_length=20, choices=CHOICES, default="CT")
-    dose = models.PositiveIntegerField(blank=True, null=True)
-    time = models.DateTimeField(blank=True, null=True)
+    dose = models.CharField(max_length=255, blank=True, null=True)  # Auto Field
+    time_start = models.DateTimeField(blank=True, null=True)
+    time_end = models.DateTimeField(blank=True, null=True)
 
     def __str__(self):
         return self.name
@@ -141,7 +147,7 @@ class History(models.Model):
     history_of_present_illness = models.ManyToManyField(DiseaseLibrary, blank=True,
                                                         related_name='history_of_present_illness')  # Auto Suggest Field
     past_surgical_history = models.TextField(blank=True, null=True)  # Auto Suggest Field
-    history_of_ct_rt_ccrt_other = models.ManyToManyField(DiseaseLibrary, blank=True,
+    history_of_ct_rt_ccrt_other = models.ManyToManyField(HistoryOfCTRTCCTROther, blank=True,
                                                          related_name='history_of_ct_rt_ccrt_other')  # Auto Suggest Field
     co_morbidities = models.ManyToManyField(DiseaseLibrary, blank=True,
                                             related_name='co_morbidities')  # Auto Suggest Field
@@ -158,14 +164,13 @@ class FollowUp(models.Model):
     Follow up for patients
     """
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
-    details = models.TextField(blank=True, null=True)  # Auto Suggest Field
-    complaint = models.TextField(blank=True, null=True)  # Auto Suggest Field
-    examination = models.TextField(blank=True, null=True)  # Auto Suggest Field
-    investigation = models.TextField(blank=True, null=True)  # Auto Suggest Field
     date = models.DateTimeField(null=True, blank=True)
+    complaint = models.TextField(blank=True, null=True)  # Auto Suggest Field
+    findings = models.TextField(blank=True, null=True)  # Auto Suggest Field
+    investigation = models.TextField(blank=True, null=True)  # Auto Suggest Field Foreign key to Investigation table
 
     def __str__(self):
-        return self.details
+        return self.complaint
 
 
 """ Media Models """

@@ -18,6 +18,8 @@ from .models import (
     FollowUpVideo,
     FollowUpDocument,
     FamilyHistory,
+    HistoryOfCTRTCCTROther,
+    Examination,
 
 )
 
@@ -28,6 +30,11 @@ class PatientAdminForm(forms.ModelForm):
     class Meta:
         model = Patient
         fields = "__all__"
+
+
+admin.site.register(HistoryOfCTRTCCTROther)
+
+admin.site.register(Examination)
 
 
 class PatientAdmin(admin.ModelAdmin):
