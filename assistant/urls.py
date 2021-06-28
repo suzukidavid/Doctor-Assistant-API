@@ -8,12 +8,18 @@ from .views import (
     DiagnosisViewSet,
     SurgeryViewSet,
     FollowUpViewSet,
+
     InvestigationImageViewSet,
     InvestigationVideoViewSet,
     InvestigationDocumentViewSet,
+
     SurgeryImageViewSet,
     SurgeryVideoViewSet,
     SurgeryDocumentViewSet,
+
+    FollowUpImageViewSet,
+    FollowUpVideoViewSet,
+    FollowUpDocumentViewSet,
 
     # PatientProfile
 )
@@ -34,6 +40,10 @@ router.register('investigation/document', InvestigationDocumentViewSet)
 router.register('surgery/image', SurgeryImageViewSet)
 router.register('surgery/video', SurgeryVideoViewSet)
 router.register('surgery/document', SurgeryDocumentViewSet)
+
+router.register('follow_up/image', FollowUpImageViewSet)
+router.register('follow_up/video', FollowUpVideoViewSet)
+router.register('follow_up/document', FollowUpDocumentViewSet)
 
 urlpatterns = [
     path('api/', include(router.urls)),

@@ -96,7 +96,7 @@ class InvestigationDocumentViewSet(viewsets.ModelViewSet):
 class SurgeryImageViewSet(viewsets.ModelViewSet):
     """ViewSet for the SurgeryImage class"""
 
-    queryset = models.InvestigationImage.objects.all()
+    queryset = models.SurgeryImage.objects.all()
     serializer_class = serializers.SurgeryImageSerializer
 
     permission_classes = [permissions.IsAuthenticated, IsDoctor]
@@ -119,6 +119,32 @@ class SurgeryDocumentViewSet(viewsets.ModelViewSet):
 
     permission_classes = [permissions.IsAuthenticated, IsDoctor]
 
+
+class FollowUpImageViewSet(viewsets.ModelViewSet):
+    """ViewSet for the SurgeryImage class"""
+
+    queryset = models.FollowUpImage.objects.all()
+    serializer_class = serializers.FollowUpImageSerializer
+
+    permission_classes = [permissions.IsAuthenticated, IsDoctor]
+
+
+class FollowUpVideoViewSet(viewsets.ModelViewSet):
+    """ViewSet for the Surgery Video class"""
+
+    queryset = models.FollowUpVideo.objects.all()
+    serializer_class = serializers.FollowUpVideoSerializer
+
+    permission_classes = [permissions.IsAuthenticated, IsDoctor]
+
+
+class FollowUpDocumentViewSet(viewsets.ModelViewSet):
+    """ViewSet for the Surgery Document class"""
+
+    queryset = models.FollowUpDocument.objects.all()
+    serializer_class = serializers.FollowUpDocumentSerializer
+
+    permission_classes = [permissions.IsAuthenticated, IsDoctor]
 #
 # class PatientProfile(viewsets.ModelViewSet):
 #     """
