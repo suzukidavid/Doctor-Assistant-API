@@ -37,6 +37,14 @@ class FamilyHistoryViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.FamilyHistorySerializer
     permission_classes = [permissions.IsAuthenticated, IsDoctor]
 
+class HistoryViewSet(viewsets.ModelViewSet):
+    """
+    ViewSet For Disease Family History
+    """
+    queryset = models.History.objects.all()
+    serializer_class = serializers.HistorySerializer
+    permission_classes = [permissions.IsAuthenticated, IsDoctor]
+
 
 class InvestigationViewSet(viewsets.ModelViewSet):
     """ViewSet for the Investigation class"""

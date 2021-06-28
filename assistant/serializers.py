@@ -82,11 +82,14 @@ class DiagnosisSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class DiseaseLibrarySerializer(serializers.ModelSerializer):
-    class Meta:
-        model = models.DiseaseLibrary
-        fields = '__all__'
+class HistorySerializer(serializers.ModelSerializer):
+    patients = PatientSerializer(read_only=True)
+    patients_id = serializers.PrimaryKeyRelatedField(
+        queryset=models.Patient.objects.all(), source='patients', write_only=True)
 
+    class Meta:
+        model = models.History
+        fields = '__all__'
 
 """
 Media Serializer 

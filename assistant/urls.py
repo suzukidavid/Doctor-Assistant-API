@@ -22,6 +22,7 @@ from .views import (
     FollowUpImageViewSet,
     FollowUpVideoViewSet,
     FollowUpDocumentViewSet,
+    HistoryViewSet,
 
     # PatientProfile
 )
@@ -31,6 +32,7 @@ router.register('patients', PatientViewSet)  # for patient - post and get
 router.register('disease_library', DiseaseLibraryViewSet)  # for patient - post and get
 router.register('family_history', FamilyHistoryViewSet)  # for patient - post and get
 # router.register('patient/profile', PatientProfile)  # for patients profile - Search,
+router.register('history', HistoryViewSet)
 router.register('investigation', InvestigationViewSet)
 router.register('diagnosis', DiagnosisViewSet)
 router.register('surgery', SurgeryViewSet)
