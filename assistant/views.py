@@ -29,6 +29,15 @@ class DiseaseLibraryViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticated]
 
 
+class FamilyHistoryViewSet(viewsets.ModelViewSet):
+    """
+    ViewSet For Disease Family History
+    """
+    queryset = models.FamilyHistory.objects.all()
+    serializer_class = serializers.FamilyHistorySerializer
+    permission_classes = [permissions.IsAuthenticated, IsDoctor]
+
+
 class InvestigationViewSet(viewsets.ModelViewSet):
     """ViewSet for the Investigation class"""
 
@@ -145,6 +154,7 @@ class FollowUpDocumentViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.FollowUpDocumentSerializer
 
     permission_classes = [permissions.IsAuthenticated, IsDoctor]
+
 #
 # class PatientProfile(viewsets.ModelViewSet):
 #     """

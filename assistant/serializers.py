@@ -36,6 +36,12 @@ class DiseaseLibrarySerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
+class FamilyHistorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.FamilyHistory
+        fields = '__all__'
+
+
 class InvestigationSerializer(serializers.ModelSerializer):
     patients = PatientSerializer(read_only=True)
     patients_id = serializers.PrimaryKeyRelatedField(
