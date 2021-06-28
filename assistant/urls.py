@@ -3,6 +3,7 @@ from rest_framework.routers import DefaultRouter
 
 from .views import (
     PatientViewSet,
+    DiseaseLibraryViewSet,
     InvestigationViewSet,
     DiagnosisViewSet,
     SurgeryViewSet,
@@ -19,6 +20,7 @@ from .views import (
 
 router = DefaultRouter()
 router.register('patients', PatientViewSet)  # for patient - post and get
+router.register('disease_library', DiseaseLibraryViewSet)  # for patient - post and get
 # router.register('patient/profile', PatientProfile)  # for patients profile - Search,
 router.register('investigation', InvestigationViewSet)
 router.register('diagnosis', DiagnosisViewSet)
