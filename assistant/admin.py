@@ -17,6 +17,7 @@ from .models import (
     FollowUpImage,
     FollowUpVideo,
     FollowUpDocument,
+    FamilyHistory,
 
 )
 
@@ -124,3 +125,5 @@ class FollowUpAdmin(admin.ModelAdmin):
     class Meta:
         model = FollowUp
 
+
+admin.site.register(FamilyHistory)
