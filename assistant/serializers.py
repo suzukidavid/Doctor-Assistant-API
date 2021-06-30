@@ -17,7 +17,6 @@ class PatientSerializer(serializers.ModelSerializer):
             "registration_number",
             "profile_image",
             "name",
-            "diagnosis",
             "sex",
             "age",
             "phone",
