@@ -144,13 +144,11 @@ class History(models.Model):
     Patient History Model
     """
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
-    history_of_present_illness = models.ManyToManyField(DiseaseLibrary, blank=True,
-                                                        related_name='history_of_present_illness')  # Auto Suggest Field
+    history_of_present_illness = models.TextField(blank=True, null=True)  # Auto Suggest Field
     past_surgical_history = models.TextField(blank=True, null=True)  # Auto Suggest Field
     history_of_ct_rt_ccrt_other = models.ManyToManyField(HistoryOfCTRTCCTROther, blank=True,
                                                          related_name='history_of_ct_rt_ccrt_other')  # Auto Suggest Field
-    co_morbidities = models.ManyToManyField(DiseaseLibrary, blank=True,
-                                            related_name='co_morbidities')  # Auto Suggest Field
+    co_morbidities = models.TextField(blank=True, null=True)  # Auto Suggest Field
     family_history = models.ManyToManyField(FamilyHistory, blank=True,
                                             related_name='family_history')
     others = models.TextField(blank=True, null=True)
