@@ -1,7 +1,7 @@
 # Dir
 venv
 .idea
-migrations
+migrations/
 .git
 __pycache__
 
