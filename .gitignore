@@ -7,5 +7,5 @@ __pycache__
 
 
 # Files
-*.env
+.env
 *.sqlite3
