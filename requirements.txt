@@ -4,7 +4,7 @@ chardet==4.0.0
 charset-normalizer==2.0.7
 coreapi==2.3.3
 coreschema==0.0.4
-Django==3.2.9
+Django==3.2.12
 django-cors-headers==3.10.0
 django-crispy-forms==1.13.0
 django-environ==0.8.1
